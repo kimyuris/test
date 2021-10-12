@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kyr.prj.todo.mapper.TodoMapper">
+<!-- 전체조회 -->
+<select id="todoSelectList" resultType="co.kyr.prj.todo.vo.TodoVO">
+	select * from todo order by no
+</select>
+
+<!-- 삭제 -->
+<delete id="todoDelete" parameterType="co.kyr.prj.todo.vo.TodoVO">
+	delete from todo
+		where no = #{no}
+</delete>
+
+<!-- 변경(todoyn) -->
+<update id="todoUpdate" parameterType="co.kyr.prj.todo.vo.TodoVO">
+	update todo set
+		contents = #{contents},todoyn = #{todoyn} where no = #{no}
+</update>
+
+<!-- 등록 -->
+<insert id="todoInsert">
+	<selectKey order="BEFORE" keyProperty="no" resultType="int">
+		select max(*)+1 from todo
+	</selectKey>
+	insert into todo (no, contents) values(#{no}, #{contents},'0')
+</insert>
+</mapper>
